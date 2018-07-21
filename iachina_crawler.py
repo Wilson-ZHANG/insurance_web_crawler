@@ -30,7 +30,7 @@ def tkk_02_plus_mongojson(url_hash,newname,len):
     title = soup.find_all('table', {'border': '1'})
     for item1 in title:
         print('{"'+item1.find('td', {'align': 'right'}).get_text()[:-1]+'":"'+item1.find('td', {'align': 'left'}).get_text().split()[0]+'",',file=save)
-        print('"pdf_url"',':"',pdf_url,'",',file=save)
+        #print('"pdf_url"',':"',pdf_url,'",',file=save)
         #item = item.next_sibling
         #print(item1.find('td',{'align':'right'}).get_text())
         print("文件",newname,"正在爬取产品",item1.find('td', {'align': 'left'}).get_text()[:-1],"共计",len,"个产品")
@@ -42,14 +42,16 @@ def tkk_02_plus_mongojson(url_hash,newname,len):
 
                 if(jj =="在售"):
                     print('"' + kk + '":"' + jj + '",', file=save)
-                    print('"' + kk + '":"' + jj + '",')
-                    print('"停止销售日期":" "}', file=save)
+                    #print('"' + kk + '":"' + jj + '",')
+                    print('"停止销售日期":" ",', file=save)
+                    print('"PDF文件"', ':"' + pdf_url + '"}', file=save)
                 else:
                     if(kk =="停止销售日期"):
-                        print('"'+kk+'":"'+jj+'"}',file=save)
+                        print('"'+kk+'":"'+jj+'",',file=save)
+                        print('"PDF文件"', ':"' + pdf_url + '"}', file=save)
                     else:
                         print('"' + kk + '":"' + jj + '",', file=save)
-                        print('"' + kk + '":"' + jj + '",')
+                        #print('"' + kk + '":"' + jj + '",')
 
             except:
                 pass
@@ -61,12 +63,12 @@ def tkk_02_plus_mongojson(url_hash,newname,len):
 
 def main():
 
-    #li_quota_payment = [""]
-    #for u1 in li_quota_payment:
-     #   tkk_02_plus_mongojson(u1,'quota_payment.json',li_quota_payment.__len__())
+    li_quota_payment = [""]
+    for u1 in li_quota_payment:
+        tkk_02_plus_mongojson(u1,'medicare_quota_payment.json',li_quota_payment.__len__())
     li_cost_compensation = [""]
     for u2 in li_cost_compensation:
-        tkk_02_plus_mongojson(u2,'cost_compensation.json',li_cost_compensation.__len__())
+        tkk_02_plus_mongojson(u2,'medicare_cost_compensation.json',li_cost_compensation.__len__())
     li_disease_others = [""]
     for u3 in li_disease_others:
         tkk_02_plus_mongojson(u3,'disease_others.json',li_disease_others.__len__())
